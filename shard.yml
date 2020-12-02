@@ -1,0 +1,14 @@
+name: crysquant
+version: 0.1.0
+
+authors:
+  - Hadeweka
+
+dependencies:
+  matrix:
+    github: Exilor/matrix
+    branch: master
+
+crystal: ">= 0.35.1"
+
+license: MIT
