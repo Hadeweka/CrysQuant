@@ -16,8 +16,6 @@ module CrysQuant
 
       @qubits = [] of Qubit
       0.upto(@size - 1) {|i| @qubits.push Qubit.new(register: self, position: i)}
-
-      puts @qubits
     end
 
     def [](position : Int32)

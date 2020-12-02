@@ -9,7 +9,7 @@ module CrysQuant
 
     # This surely can be solved in a more elegant fashion
     def measure
-      @register.measure.to_s(2).rjust(@register.size)[-@position-1]
+      @register.measure.to_s(2).rjust(@register.size, '0')[-@position-1]
     end
   end
 end
