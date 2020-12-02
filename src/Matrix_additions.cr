@@ -19,4 +19,8 @@ struct Matrix(T)
 
     new_matrix
   end
+
+  def ⊗(other_matrix : Matrix)
+    kronecker_product(other_matrix)
+  end
 end

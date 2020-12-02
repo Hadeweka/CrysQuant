@@ -46,10 +46,10 @@ module CrysQuant
     def apply_one_qubit_gate(gate : Gate, qubit)
       classical_qubit = @size - qubit - 1
 
-      matrix = Matrix.identity(2**classical_qubit).kronecker_product(gate.get_matrix_content)
+      matrix = Matrix.identity(2**classical_qubit).⊗(gate.get_matrix_content)
 
       if qubit > 0
-        matrix = matrix.kronecker_product(Matrix.identity(2**qubit))
+        matrix = matrix.⊗(Matrix.identity(2**qubit))
       end
 
       apply_matrix(matrix)
