@@ -1,3 +1,40 @@
 # CrysQuant
 
 CrysQuant is a quantum gate simulation library in development.
+
+# Description
+
+CrysQuant is based on an older project (https://github.com/Hadeweka/HDWQuantum), which was written in Ruby at that time.
+However, the computation speed of Crystal allows for much more complex scenarios than in Ruby.
+
+# Features
+
+* Basic range of quantum gates
+* Custom quantum gates can be added easily using matrices
+* Measuring of registers (with and without wave-function collapse)
+* Inspection of the full quantum state of registers
+
+# Installing
+
+CrysQuant is a shard which can be installed by including it into your shard.yml file.
+
+# How to use
+
+The following code creates a 5-Qubit register with the initial state |11000> and then puts the 0th
+bit into a superposition of 0 and 1 using a Hadamard gate:
+```crystal
+qreg = CrysQuant::Register.new(5, 0b11000)
+qreg.apply_one_qubit_gate(CrysQuant::Gate::Hadamard, 0)
+puts 10000.times.sum {|i| qreg.measure} / 10000
+```
+The last line measures the state of the register 10000 times and averages the results.
+Since the initial state |11000> equals the decimal number 24, 
+and the other part of the superposition has the state |11001> (representing 25), 
+the result will be about 24.5.
+
+# Roadmap
+
+* [ ] Finish basic routines
+* [ ] Add collapsing measuring
+* [ ] Support for Anyolite to allow for scripting
+* [ ] Add examples and specs

@@ -41,6 +41,10 @@ module CrysQuant
     def measure
       found = false
 
+      # TODO: Max iteration depth
+
+      test_value = -1
+
       while !found
         test_value = rand(2**@size)
         if rand < @state_vector[test_value, 0].abs2
