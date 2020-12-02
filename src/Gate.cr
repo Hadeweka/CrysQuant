@@ -24,22 +24,14 @@ module CrysQuant
     Gate.implement(CCNOT, alternative_names: [Toffoli])
     Gate.implement(CSWAP, alternative_names: [Fredkin])
 
-    @matrix_content : Matrix(Complex)
+    property content : Matrix(Complex)
 
     def initialize(matrix : Matrix)
-      @matrix_content = CrysQuant.convert_to_complex_matrix(matrix)
-    end
-
-    def type 
-      @type
+      @content = CrysQuant.convert_to_complex_matrix(matrix)
     end
 
     def *(other_gate : Gate)
       Gate.new(this_matrix * other_matrix)
-    end
-
-    def content : Matrix(Complex)
-      @matrix_content
     end
   end
 end
