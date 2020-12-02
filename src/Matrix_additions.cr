@@ -23,4 +23,8 @@ struct Matrix(T)
   def ⊗(other_matrix : Matrix)
     kronecker_product(other_matrix)
   end
+
+  def ⊤
+    self.transpose
+  end
 end

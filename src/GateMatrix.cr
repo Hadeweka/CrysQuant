@@ -3,10 +3,10 @@ module CrysQuant
     Unity = Matrix.identity(2)
     Zero = Matrix[[0, 0], [0, 0]]
 
-    Base_00 = State_0.kronecker_product(State_0.transpose)
-    Base_01 = State_0.kronecker_product(State_1.transpose)
-    Base_10 = State_1.kronecker_product(State_0.transpose)
-    Base_11 = State_1.kronecker_product(State_1.transpose)
+    Base_00 = State_0.⊗(State_0.⊤)
+    Base_01 = State_0.⊗(State_1.⊤)
+    Base_10 = State_1.⊗(State_0.⊤)
+    Base_11 = State_1.⊗(State_1.⊤)
 
     Bases = [[Base_00, Base_01], [Base_10, Base_11]]
 
