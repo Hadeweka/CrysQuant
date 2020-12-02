@@ -14,3 +14,5 @@ puts "====="
 puts qreg.measure!
 puts qreg.inspect
 puts qbit.measure
+
+puts qreg[0, 1]

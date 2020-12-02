@@ -24,6 +24,15 @@ module CrysQuant
       @qubits[position]
     end
 
+    def [](position_1 : Int32, position_2 : Int32)
+      Tuple.new(@qubits[position_1], @qubits[position_2])
+    end
+
+    # TODO: Can this be generalized?
+    def [](position_1 : Int32, position_2 : Int32, position_3 : Int32)
+      Tuple.new(@qubits[position_1], @qubits[position_2], @qubits[position_3])
+    end
+
     def each
       @qubits.each {|i| yield i}
     end
