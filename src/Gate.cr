@@ -42,6 +42,22 @@ module CrysQuant
       @array_content = nil
     end
 
+    def type 
+      @type
+    end
+
+    def *(other_gate : Gate)
+      if @type == Type::MATRIX && other_gate.type == Type::MATRIX
+        if (this_matrix = @matrix_content) && (other_matrix = other_gate.get_matrix_content)
+          Gate.new(this_matrix * other_matrix)
+        else
+          raise("Corrupted matrix content")
+        end
+      else
+        raise("Gate wiring for multiple qubits not supported yet")
+      end
+    end
+
     def initialize(array : Array(Array(Matrix)))
       if array.size == 2
         @type = Type::ARRAY_2
