@@ -7,7 +7,7 @@ module CrysQuant
     Gate.implement(Pauli_Y, alternative_names: [Y])
     Gate.implement(Pauli_Z, alternative_names: [Z, NOT])
 
-    Gate.implement(Hadamard)
+    Gate.implement(Hadamard, alternative_names: [H])
 
     Gate.implement(Rotation_X_90, alternative_names: [S])
     Gate.implement(Rotation_Y_90, alternative_names: [T])
@@ -37,7 +37,7 @@ module CrysQuant
 
     def initialize(matrix : Matrix)
       @type = Type::MATRIX
-      
+
       @matrix_content = CrysQuant.convert_to_complex_matrix(matrix)
       @array_content = nil
     end
