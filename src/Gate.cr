@@ -3,9 +3,9 @@ module CrysQuant
     Gate.implement(Unity, alternative_names: [Identity])
     Gate.implement(Zero)
 
-    Gate.implement(Pauli_X, alternative_names: [X])
+    Gate.implement(Pauli_X, alternative_names: [X, NOT])
     Gate.implement(Pauli_Y, alternative_names: [Y])
-    Gate.implement(Pauli_Z, alternative_names: [Z, NOT])
+    Gate.implement(Pauli_Z, alternative_names: [Z])
 
     Gate.implement(Hadamard, alternative_names: [H])
 

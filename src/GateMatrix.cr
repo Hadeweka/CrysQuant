@@ -27,7 +27,7 @@ module CrysQuant
 
     Sqrt_NOT = Matrix[[Complex.new(1, 1), Complex.new(1, -1)], [Complex.new(1, -1), Complex.new(1, 1)]] / 2
 
-    CNOT = [[Unity, Zero], [Zero, Pauli_Z]]
+    CNOT = [[Unity, Zero], [Zero, Pauli_X]]
     SWAP = [[Base_00, Base_10], [Base_01, Base_11]]
     Sqrt_SWAP = [[Helper_A, Base_10 * Complex.new(1/2, -1/2)], [Base_01 * Complex.new(1/2, -1/2), Helper_B]]
 
