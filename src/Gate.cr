@@ -25,10 +25,10 @@ module CrysQuant
     Gate.implement(CSWAP, alternative_names: [Fredkin])
 
     enum Type
-      UNKNOWN
-      MATRIX
-      ARRAY_2
-      ARRAY_3
+      UNKNOWN   # Something went wrong
+      MATRIX    # Either a (2 x 2)-matrix or a full (N x N)-matrix
+      ARRAY_2   # A (2 x 2)-array of (2 x 2)-matrices, for 2-qubit operations
+      ARRAY_3   # A (4 x 4)-array of (2 x 2)-matrices, for 3-qubit operations
     end
 
     @type : Type = Type::UNKNOWN
