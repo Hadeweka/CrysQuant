@@ -24,22 +24,10 @@ module CrysQuant
     Gate.implement(CCNOT, alternative_names: [Toffoli])
     Gate.implement(CSWAP, alternative_names: [Fredkin])
 
-    enum Type
-      UNKNOWN   # Something went wrong
-      MATRIX    # Either a (2 x 2)-matrix or a full (N x N)-matrix
-      ARRAY_2   # A (2 x 2)-array of (2 x 2)-matrices, for 2-qubit operations
-      ARRAY_3   # A (4 x 4)-array of (2 x 2)-matrices, for 3-qubit operations
-    end
-
-    @type : Type = Type::UNKNOWN
     @matrix_content : Matrix(Complex) | Nil
-    @array_content : Array(Array(Matrix(Complex))) | Nil
 
     def initialize(matrix : Matrix)
-      @type = Type::MATRIX
-
       @matrix_content = CrysQuant.convert_to_complex_matrix(matrix)
-      @array_content = nil
     end
 
     def type 
@@ -47,49 +35,14 @@ module CrysQuant
     end
 
     def *(other_gate : Gate)
-      if @type == Type::MATRIX && other_gate.type == Type::MATRIX
-        if (this_matrix = @matrix_content) && (other_matrix = other_gate.get_matrix_content)
-          Gate.new(this_matrix * other_matrix)
-        else
-          raise("Corrupted matrix content")
-        end
-      else
-        raise("Gate wiring for multiple qubits not supported yet")
-      end
+      Gate.new(this_matrix * other_matrix)
     end
 
-    def initialize(array : Array(Array(Matrix)))
-      if array.size == 2
-        @type = Type::ARRAY_2
-      elsif array.size == 4
-        @type = Type::ARRAY_3
+    def content : Matrix(Complex)
+      if content = @matrix_content
+        content
       else
-        raise("Invalid array size for gate: #{array.size}")
-      end
-
-      @array_content = Array.new(size: array.size) do |m|
-        Array.new(size: array.size) do |n|
-          CrysQuant.convert_to_complex_matrix(array[m][n])
-        end
-      end
-      @matrix_content = nil
-    end
-
-    def get_matrix_content(i = 0, j = 0) : Matrix(Complex)
-      if @type == Type::UNKNOWN
-        raise("Unknown content type for gate")
-      elsif @type == Type::MATRIX
-        if content = @matrix_content
-          content
-        else
-          raise("Corrupted matrix content")
-        end
-      else
-        if content = @array_content
-          content[i][j]
-        else
-          raise("Corrupted matrix content")
-        end
+        raise("Gate has no matrix content")
       end
     end
   end

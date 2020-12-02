@@ -1,7 +1,7 @@
 struct Matrix(T)
-  def *(scalar : Complex | Number)
-    Matrix.new(@rows, @columns) do |i|
-      i * scalar
+  def *(scalar : Complex)
+    Matrix.new(@rows, @columns) do |element|
+      self[element] * scalar
     end
   end
 

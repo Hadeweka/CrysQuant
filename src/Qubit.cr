@@ -3,8 +3,8 @@ module CrysQuant
     def initialize(@register : Register, @position : Int64 | Int32)
     end
 
-    def apply_one_qubit_gate(gate)
-      @register.apply_one_qubit_gate(gate, @position)
+    def apply(gate)
+      @register.apply(gate, @position)
     end
 
     # This surely can be solved in a more elegant fashion

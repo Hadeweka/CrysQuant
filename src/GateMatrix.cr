@@ -1,6 +1,7 @@
 module CrysQuant
   module GateMatrix
     Unity = Matrix.identity(2)
+    Unity4 = Matrix.identity(4)
     Zero = Matrix[[0, 0], [0, 0]]
 
     Base_00 = State_0.⊗(State_0.⊤)
@@ -11,7 +12,7 @@ module CrysQuant
     Bases = [[Base_00, Base_01], [Base_10, Base_11]]
 
     Helper_A = Matrix[[1, 0], [0, Complex.new(1/2, 1/2)]]
-    Helper_B = Matrix[[Complex.new(1/2, 1/2), 0], [0, 1.0]]
+    Helper_B = Matrix[[Complex.new(1/2, 1/2), 0], [0, 1]]
 
     Pauli_X = Matrix[[0, 1], [1, 0]]
     Pauli_Y = Matrix[[0, -I], [I, 0]]
@@ -27,11 +28,12 @@ module CrysQuant
 
     Sqrt_NOT = Matrix[[Complex.new(1, 1), Complex.new(1, -1)], [Complex.new(1, -1), Complex.new(1, 1)]] / 2
 
-    CNOT = Base_00.⊗(GateMatrix::Unity) + Base_11.⊗(GateMatrix::Pauli_X)
-    SWAP = [[Base_00, Base_10], [Base_01, Base_11]]
-    Sqrt_SWAP = [[Helper_A, Base_10 * Complex.new(1/2, -1/2)], [Base_01 * Complex.new(1/2, -1/2), Helper_B]]
+    CNOT = Base_00.⊗(Unity) + Base_11.⊗(Pauli_X)
+    SWAP = Base_00.⊗(Base_00) + Base_01.⊗(Base_10) + Base_10.⊗(Base_01) + Base_11.⊗(Base_11)
 
-    CCNOT = [[Unity, Zero, Zero, Unity], [Zero] * 4, [Zero] * 4, CNOT.flatten]
-    CSWAP = [[Unity, Zero, Zero, Unity], [Zero] * 4, [Zero] * 4, SWAP.flatten]
+    Sqrt_SWAP = Helper_B.⊗(Base_11) + Helper_A.⊗(Base_00) + (Base_01.⊗(Base_10) + Base_10.⊗(Base_01)) * Complex.new(1/2, -1/2)
+
+    CCNOT = Base_00.⊗(Unity4) + Base_11.⊗(CNOT)
+    CSWAP = Base_00.⊗(Unity4) + Base_11.⊗(SWAP)
   end
 end
