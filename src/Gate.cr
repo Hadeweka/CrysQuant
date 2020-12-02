@@ -24,7 +24,7 @@ module CrysQuant
     Gate.implement(CCNOT, alternative_names: [Toffoli])
     Gate.implement(CSWAP, alternative_names: [Fredkin])
 
-    @matrix_content : Matrix(Complex) | Nil
+    @matrix_content : Matrix(Complex)
 
     def initialize(matrix : Matrix)
       @matrix_content = CrysQuant.convert_to_complex_matrix(matrix)
@@ -39,11 +39,7 @@ module CrysQuant
     end
 
     def content : Matrix(Complex)
-      if content = @matrix_content
-        content
-      else
-        raise("Gate has no matrix content")
-      end
+      @matrix_content
     end
   end
 end
