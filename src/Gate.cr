@@ -1,15 +1,4 @@
-require "math"
-require "matrix"
-require "complex"
-
-require "./Matrix_Kronecker.cr"
-
 module CrysQuant
-  State_0 = Matrix[[1], [0]]
-  State_1 = Matrix[[0], [1]]
-
-  I = Complex.new(0, 1)
-  
   module Gate
     Unity = Matrix.identity(2)
     Zero = Matrix[[0, 0], [0, 0]]

@@ -35,6 +35,6 @@ the result will be about 24.5.
 # Roadmap
 
 * [ ] Finish basic routines
-* [ ] Add collapsing measuring
+* [X] Add collapsing measuring
 * [ ] Support for Anyolite to allow for scripting
 * [ ] Add examples and specs

@@ -1,23 +1,35 @@
-require "math"
-require "matrix"
-require "complex"
-
-require "./Matrix_Kronecker.cr"
-
 module CrysQuant
   class Register
     @size : UInt32
     @state_vector : Matrix(Complex)
+    @qubits : Array(Qubit)
 
-    def initialize(size : UInt32, position : UInt32)
-      if 2**size <= position
-        raise "Position #{position} greater than size #{2**size} of register"
+    include Enumerable(Qubit)
+
+    def initialize(size : UInt32, state : UInt32)
+      if 2**size <= state
+        raise "State #{state} greater than size #{2**size} of register"
       end
 
       @size = size
-      @state_vector = Matrix(Complex).new(2**size, 1) do |index, i, j|
-        Complex.new(i == position ? 1 : 0)
-      end
+      @state_vector = CrysQuant.create_state_vector(state, @size)
+
+      @qubits = [] of Qubit
+      0.upto(@size - 1) {|i| @qubits.push Qubit.new(register: self, position: i)}
+
+      puts @qubits
+    end
+
+    def [](position : Int32)
+      @qubits[position]
+    end
+
+    def each
+      @qubits.each {|i| yield i}
+    end
+
+    def size
+      @size
     end
 
     def apply_matrix(matrix)
@@ -38,12 +50,12 @@ module CrysQuant
 
     # TODO: Higher qubit-count gates
 
-    def measure
+    def measure : UInt32
       found = false
 
       # TODO: Max iteration depth
 
-      test_value = -1
+      test_value = 0
 
       while !found
         test_value = rand(2**@size)
@@ -52,7 +64,13 @@ module CrysQuant
         end
       end
 
-      test_value
+      test_value.to_u32
+    end
+
+    def measure!
+      new_state = measure
+      @state_vector = CrysQuant.create_state_vector(new_state, @size)
+      new_state
     end
 
     def inspect
