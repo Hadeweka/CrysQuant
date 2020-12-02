@@ -1,6 +1,6 @@
 module CrysQuant
   class Qubit
-    def initialize(@register : Register, @position : Int32)
+    def initialize(@register : Register, @position : Int64 | Int32)
     end
 
     def apply_one_qubit_gate(gate)

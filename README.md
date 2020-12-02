@@ -30,7 +30,11 @@ puts 10000.times.sum {|i| qreg.measure} / 10000
 The last line measures the state of the register 10000 times and averages the results.
 Since the initial state |11000> equals the decimal number 24, 
 and the other part of the superposition has the state |11001> (representing 25), 
-the result will be about 24.5.
+the result will be approximately 24.5.
+
+Note that quantum gate computations require absurdly large matrices, so your memory will probably
+overflow at about 15 qubits, maybe even earlier. Generally, computations up to about 10 qubits
+should not pose any problems on regular machines.
 
 # Roadmap
 

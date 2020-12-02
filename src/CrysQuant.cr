@@ -10,7 +10,7 @@ module CrysQuant
 
   I = Complex.new(0, 1)
 
-  def self.create_state_vector(state : UInt32, size : UInt32)
+  def self.create_state_vector(state : UInt64, size : UInt64)
     Matrix(Complex).new(2**size, 1) do |index, i, j|
       Complex.new(i == state ? 1 : 0)
     end

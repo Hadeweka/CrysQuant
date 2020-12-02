@@ -1,12 +1,12 @@
 module CrysQuant
   class Register
-    @size : UInt32
+    @size : UInt64
     @state_vector : Matrix(Complex)
     @qubits : Array(Qubit)
 
     include Enumerable(Qubit)
 
-    def initialize(size : UInt32, state : UInt32)
+    def initialize(size : UInt64, state : UInt64)
       if 2**size <= state
         raise "State #{state} greater than size #{2**size} of register"
       end
@@ -18,16 +18,16 @@ module CrysQuant
       0.upto(@size - 1) {|i| @qubits.push Qubit.new(register: self, position: i)}
     end
 
-    def [](position : Int32)
+    def [](position : Int64)
       @qubits[position]
     end
 
-    def [](position_1 : Int32, position_2 : Int32)
+    def [](position_1 : Int64, position_2 : Int64)
       Tuple.new(@qubits[position_1], @qubits[position_2])
     end
 
     # TODO: Can this be generalized?
-    def [](position_1 : Int32, position_2 : Int32, position_3 : Int32)
+    def [](position_1 : Int64, position_2 : Int64, position_3 : Int64)
       Tuple.new(@qubits[position_1], @qubits[position_2], @qubits[position_3])
     end
 
@@ -57,7 +57,7 @@ module CrysQuant
 
     # TODO: Higher qubit-count gates
 
-    def measure : UInt32
+    def measure : UInt64
       found = false
 
       # TODO: Max iteration depth and invalid value
@@ -71,7 +71,7 @@ module CrysQuant
         end
       end
 
-      test_value.to_u32
+      test_value.to_u64
     end
 
     def measure!
