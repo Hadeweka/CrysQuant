@@ -1,4 +1,10 @@
 struct Matrix(T)
+  def *(scalar : Complex | Number)
+    Matrix.new(@rows, @columns) do |i|
+      i * scalar
+    end
+  end
+
   def kronecker_product(other_matrix : Matrix)
     width = @rows
     height = @columns

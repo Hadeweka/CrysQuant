@@ -15,10 +15,19 @@ module CrysQuant
       Complex.new(i == state ? 1 : 0)
     end
   end
+
+  def self.convert_to_complex_matrix(matrix : Matrix)
+    Matrix.new(matrix.rows.size, matrix.columns.size) do |index, i, j|
+      Complex.new(matrix[i, j])
+    end
+  end
 end
 
-require "./Matrix_Kronecker.cr"
+require "./Macros.cr"
 
-require "./Qubit.cr"
+require "./Matrix_additions.cr"
+
+require "./GateMatrix.cr"
 require "./Gate.cr"
+require "./Qubit.cr"
 require "./Register.cr"

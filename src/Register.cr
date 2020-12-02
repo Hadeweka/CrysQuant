@@ -43,10 +43,10 @@ module CrysQuant
       @state_vector = matrix * @state_vector
     end
 
-    def apply_one_qubit_gate(gate, qubit)
+    def apply_one_qubit_gate(gate : Gate, qubit)
       classical_qubit = @size - qubit - 1
 
-      matrix = Matrix.identity(2**classical_qubit).kronecker_product(gate)
+      matrix = Matrix.identity(2**classical_qubit).kronecker_product(gate.get_matrix_content)
 
       if qubit > 0
         matrix = matrix.kronecker_product(Matrix.identity(2**qubit))
@@ -60,7 +60,7 @@ module CrysQuant
     def measure : UInt32
       found = false
 
-      # TODO: Max iteration depth
+      # TODO: Max iteration depth and invalid value
 
       test_value = 0
 
