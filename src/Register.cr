@@ -31,6 +31,14 @@ module CrysQuant
       Tuple.new(@qubits[position_1], @qubits[position_2], @qubits[position_3])
     end
 
+    def each
+      @qubits.each {|i| yield i}
+    end
+
+    def size
+      @size
+    end
+
     def swap_qubits(position_1 : Int64, position_2 : Int64)
       new_state_vector = Matrix(Complex).new(2**@size, 1) do |index, i, j|
         # Some bit magic to swap two bits.
@@ -64,12 +72,28 @@ module CrysQuant
       @state_vector = new_state_vector
     end
 
-    def each
-      @qubits.each {|i| yield i}
-    end
+    def apply_on_lowest_qubits(matrix : Matrix)
+      gate_size = matrix.rows.size
 
-    def size
-      @size
+      final_state_vector = nil
+
+      0.upto(2**@size // gate_size - 1) do |k|
+        state_vector_partition = Matrix(Complex).new(gate_size, 1) do |index, i, j|
+          @state_vector[row: k * gate_size + index, column: 0]
+        end
+
+        if !final_state_vector
+          final_state_vector = matrix * state_vector_partition 
+        else
+          final_state_vector = final_state_vector.append(matrix * state_vector_partition)
+        end
+      end
+
+      if non_nil_final_state_vector = final_state_vector
+        @state_vector = non_nil_final_state_vector
+      else
+        raise("Application of matrix of state vector failed")
+      end
     end
 
     def apply(matrix : Matrix)
@@ -99,7 +123,7 @@ module CrysQuant
 
       while !found
         test_value = rand(2**@size)
-        if rand < @state_vector[test_value, 0].abs2
+        if rand < @state_vector[row: test_value, column: 0].abs2
           found = test_value
         end
       end

@@ -11,14 +11,14 @@ module CrysQuant
   I = Complex.new(0, 1)
 
   def self.create_state_vector(state : UInt64, size : UInt64)
-    Matrix(Complex).new(2**size, 1) do |index, i, j|
+    Matrix(Complex).new(rows: 2**size, columns: 1) do |index, i, j|
       Complex.new(index == state ? 1 : 0)
     end
   end
 
   def self.convert_to_complex_matrix(matrix : Matrix)
-    Matrix.new(matrix.rows.size, matrix.columns.size) do |index, i, j|
-      Complex.new(matrix[i, j])
+    Matrix.new(rows: matrix.rows.size, columns: matrix.columns.size) do |index, i, j|
+      Complex.new(matrix[row: i, column: j])
     end
   end
 end
