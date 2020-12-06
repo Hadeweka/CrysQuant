@@ -38,7 +38,9 @@ should not pose any problems on regular machines.
 
 # Roadmap
 
-* [ ] Finish basic routines
-* [X] Add collapsing measuring
+* [ ] Fast Qubit swapping without matrices
+* [ ] Memory-efficient gate operations
+* [ ] Measurements of single Qubits
+* [ ] Proc-powered matrices
 * [ ] Support for Anyolite to allow for scripting
 * [ ] Add examples and specs
