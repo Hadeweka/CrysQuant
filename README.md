@@ -38,7 +38,7 @@ should not pose any problems on regular machines.
 
 # Roadmap
 
-* [ ] Fast Qubit swapping without matrices
+* [X] Fast Qubit swapping without matrices
 * [ ] Memory-efficient gate operations
 * [ ] Measurements of single Qubits
 * [ ] Proc-powered matrices
