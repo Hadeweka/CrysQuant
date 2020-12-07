@@ -39,7 +39,7 @@ should not pose any problems on regular machines.
 # Roadmap
 
 * [X] Fast Qubit swapping without matrices
-* [ ] Memory-efficient gate operations
+* [X] Memory-efficient gate operations
 * [ ] Measurements of single Qubits
 * [ ] Proc-powered matrices
 * [ ] Support for Anyolite to allow for scripting

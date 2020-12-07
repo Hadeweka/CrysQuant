@@ -40,6 +40,8 @@ module CrysQuant
     end
 
     def swap_qubits(position_1 : Int64, position_2 : Int64)
+      return if position_1 == position_2
+
       new_state_vector = Matrix(Complex).new(2**@size, 1) do |index, i, j|
         # Some bit magic to swap two bits.
         # What we want to do, is to copy each value of the state vector to a new one,
@@ -96,23 +98,38 @@ module CrysQuant
       end
     end
 
-    def apply(matrix : Matrix)
+    def apply_directly(matrix : Matrix)
       @state_vector = matrix * @state_vector
     end
 
-    def apply(gate : Gate, qubit)
-      classical_qubit = @size - qubit - 1
+    def apply(gate : Gate, *qubits)
+      current_qubit_positions = Array.new(size: @size) {|i| i}
+      swaps = Array(Tuple(Int64, Int64)).new
 
-      matrix = Matrix.identity(2**classical_qubit).⊗(gate.content)
+      # Swap the Qubits to be operated on with the lowest qubits
+      0.upto(qubits.size - 1) do |i|
+        # Find the current position of the destination qubit
+        destination_index = current_qubit_positions.index(qubits[i])
 
-      if qubit > 0
-        matrix = matrix.⊗(Matrix.identity(2**qubit))
+        # Destination index could technically be nil, but this should not happen
+        if destination_index
+          swap_qubits(i.to_i64, destination_index.to_i64)
+
+          # Store all swaps
+          current_qubit_positions.swap(i.to_i64, destination_index.to_i64)
+          swaps.push({i.to_i64, destination_index.to_i64})
+        end
       end
 
-      apply(matrix)
-    end
+      # Apply the gate
+      apply_on_lowest_qubits(gate.content)
 
-    # TODO: Higher qubit-count gates
+      # Swap everything back
+      swaps.reverse.each do |swap|
+        swap_qubits(swap[0], swap[1])
+        current_qubit_positions.swap(swap[0], swap[1])
+      end
+    end
 
     def measure : UInt64
       found = false
