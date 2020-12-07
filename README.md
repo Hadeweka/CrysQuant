@@ -25,9 +25,10 @@ bit into a superposition of 0 and 1 using a Hadamard gate:
 ```crystal
 qreg = CrysQuant::Register.new(5, 0b11000)
 qreg[0].apply(CrysQuant::Gate::Hadamard)
-puts 10000.times.sum {|i| qreg.measure} / 10000
+puts 10000.times.sum {|i| qreg.probe} / 10000
 ```
-The last line measures the state of the register 10000 times and averages the results.
+The last line probes the state of the register 10000 times and averages the results,
+without collapsing the quantum state.
 Since the initial state |11000⟩ equals the decimal number 24, 
 and the other part of the superposition has the state |11001⟩ (representing 25), 
 the result will be approximately 24.5.

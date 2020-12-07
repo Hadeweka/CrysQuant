@@ -8,8 +8,8 @@ module CrysQuant
     end
 
     # This surely can be solved in a more elegant fashion
-    def measure
-      @register.measure.to_s(2).rjust(@register.size, '0')[-@position-1]
+    def probe
+      @register.probe.to_s(2).rjust(@register.size, '0')[-@position-1].to_i
     end
   end
 end

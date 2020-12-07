@@ -131,7 +131,7 @@ module CrysQuant
       end
     end
 
-    def measure : UInt64
+    def probe : UInt64
       found = false
 
       # TODO: Max iteration depth and invalid value
@@ -148,8 +148,8 @@ module CrysQuant
       test_value.to_u64
     end
 
-    def measure!
-      new_state = measure
+    def measure
+      new_state = probe
       @state_vector = CrysQuant.create_state_vector(new_state, @size)
       new_state
     end
