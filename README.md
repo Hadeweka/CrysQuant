@@ -34,8 +34,9 @@ and the other part of the superposition has the state |11001⟩ (representing 25
 the result will be approximately 24.5.
 
 Note that quantum gate computations require absurdly large matrices, so your memory will probably
-overflow at about 15 qubits, maybe even earlier. Generally, computations up to about 10 qubits
-should not pose any problems on regular machines.
+overflow at about 30 qubits, maybe even earlier. Generally, computations up to about 15 qubits
+should not pose any problems on regular machines, while higher numbers might lead to massive
+calculation times.
 
 # Roadmap
 
@@ -45,3 +46,4 @@ should not pose any problems on regular machines.
 * [ ] Proc-powered matrices
 * [ ] Support for Anyolite to allow for scripting
 * [ ] Add examples and specs
+* [ ] Parallelization
